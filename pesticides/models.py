@@ -13,6 +13,12 @@ class Manufacturer(models.Model):
     def __str__(self):
         return self.name
 
+# these are additives to make pesticide formulas more effective
+class Adjuvant(models.Model):
+    name = models.CharField(max_length=100, blank=False)
+    epa_number = models.CharField(max_length=25, blank=True) 
+    manufacturer = models.ForeignKey(Manufacturer, null=True, on_delete=models.SET_NULL, blank=True)
+
 class Pesticide(models.Model):
     name = models.CharField(max_length=100)
     epa_number = models.CharField(max_length=25)
