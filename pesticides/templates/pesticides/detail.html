@@ -1,0 +1,15 @@
+{% extends 'pesticides/base.html' %}
+{% block content %}
+<div class="card w-50">
+    <div class="card-body">
+      <h5 class="card-title">{{ record.formula }} </h5>
+      <p class="card-text"><strong>Targeted Species: </strong>{{ record.targeted_species }}</p>
+    <p class="card-text"><strong>Weather: </strong> {{ record.weather }}</p>
+      <p class="card-text"><strong>Area Size: </strong> {{ record.area_size }}</p>
+      <p class="card-text"><strong>Applicator: </strong> {{ record.applicator }}</p>
+      <p class="card-text"><strong>Park: </strong>{{ record.park }}</p>
+      <p class="card-text"><strong>Date: </strong>{{ record.date }}</p>
+      <a href="#" class="btn btn-primary">Button</a>
+    </div>
+  </div>
+{% endblock %}

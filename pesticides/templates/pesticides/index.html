@@ -1,0 +1,55 @@
+{% extends 'pesticides/base.html' %}
+{% block content %}
+    {% if latest_records_list %}
+        <ul>
+            {% for record in latest_records_list %}
+                <li>
+                    <a href="{% url 'pesticides:detail' record.id %}">
+                        {{ record.formula }}
+                        {{ record.applicator }}
+                        {{ record.park }}
+                        {{ record.date }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No pesticide records available.</p>
+    {% endif %}
+    {% if latest_records_list %}
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Formula</th>
+                <th scope="col">Applicator</th>
+                <th scope="col">Park</th>
+                <th scope="col">Date</th>
+              </tr>
+        </thead>
+        <tbody>
+            {% for record in latest_records_list %}
+            <tr>
+                <td scope="row">
+                    <a href="{% url 'pesticides:detail' record.id %}">{{ record.id }}</a>
+                </td>
+                <td>
+                    {{ record.formula }}
+                </td>
+                <td>
+                    {{ record.applicator }}
+                </td>
+                <td>
+                    {{ record.park }}
+                </td>
+                <td>
+                    {{ record.date }}
+                </td>
+              </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+{% endblock %}
+
+
