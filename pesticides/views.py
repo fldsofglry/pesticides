@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from .models import Record
@@ -13,3 +13,10 @@ def detail(request, record_id):
     pesticide_record = Record.objects.get(id=record_id)
     context = {'record': pesticide_record}
     return render(request, 'pesticides/detail.html', context)
+
+def delete_record(request, record_id):
+    delete_it = Record.objects.get(id=record_id)
+    delete_it.delete()
+    
+    return redirect("pesticides:index")
+    # messages.success(request, "Records Deleted Successfully")

@@ -9,7 +9,8 @@
       <p class="card-text"><strong>Applicator: </strong> {{ record.applicator }}</p>
       <p class="card-text"><strong>Park: </strong>{{ record.park }}</p>
       <p class="card-text"><strong>Date: </strong>{{ record.date }}</p>
-      <a href="#" class="btn btn-primary">Button</a>
+      <a href="{% url 'pesticides:index' %}" class="btn btn-secondary">Back</a>
+      <a href="{% url 'pesticides:delete_record' record.id %}" class="btn btn-danger">Delete</a>
     </div>
   </div>
 {% endblock %}
