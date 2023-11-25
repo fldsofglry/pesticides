@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
+from django.utils.dateparse import parse_datetime
 from .models import Record, Formula, Applicator, Park 
 
 def index(request):
@@ -33,7 +34,26 @@ def add_record(request):
                 "parks": parks,
                }
     if request.method == "POST":
-            messages.success(request, "Record Added...")
-            return redirect('index')
+            print(request.POST)
+            new_record = Record()
+            applicator = Applicator.objects.get(pk=request.POST['applicator'])
+            
+            new_record.applicator = applicator
+            
+            park = Park.objects.get(pk=request.POST['park'])
+            new_record.park = park
+            formula = Formula.objects.get(pk=request.POST['formula'])
+            new_record.formula = formula
+            new_record.area_size = request.POST['area_size']
+            new_record.targeted_species = request.POST['targeted_species']
+            new_record.weather = request.POST['weather']
+            new_record.date = parse_datetime(request.POST['date']+ " " + request.POST['time'])
+
+            new_record.save()
+            
+            if new_record:
+                # messages.success(request, "Record Added...")
+                return redirect('pesticides:index')
+                 
     else:
         return HttpResponse(template.render(context, request))
