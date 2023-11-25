@@ -34,7 +34,6 @@ def add_record(request):
                 "parks": parks,
                }
     if request.method == "POST":
-            print(request.POST)
             new_record = Record()
             applicator = Applicator.objects.get(pk=request.POST['applicator'])
             
@@ -57,3 +56,16 @@ def add_record(request):
                  
     else:
         return HttpResponse(template.render(context, request))
+    
+def update_record(request, record_id):
+    formula_list = Formula.objects.all()
+    applicators = Applicator.objects.all()
+    parks = Park.objects.all()
+    current_record = Record.objects.get(id=record_id)
+    context = {'current_record': current_record,
+               'formula_list': formula_list,
+               'parks': parks,
+               'applicators': applicators,
+               }
+    print(current_record.formula.id)
+    return render(request, 'pesticides/update_record.html', context)

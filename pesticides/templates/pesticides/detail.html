@@ -11,6 +11,7 @@
       <p class="card-text"><strong>Date: </strong>{{ record.date }}</p>
       <a href="{% url 'pesticides:index' %}" class="btn btn-secondary">Back</a>
       <a href="{% url 'pesticides:delete_record' record.id %}" class="btn btn-danger">Delete</a>
+      <a href="{% url 'pesticides:update_record' record.id %}" class="btn btn-secondary">Update</a>
     </div>
   </div>
 {% endblock %}
