@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
-from .models import Record
+from django.contrib import messages
+from .models import Record, Formula, Applicator, Park 
 
 def index(request):
     latest_records_list = Record.objects.order_by("date")[:5]
@@ -17,6 +18,21 @@ def detail(request, record_id):
 def delete_record(request, record_id):
     delete_it = Record.objects.get(id=record_id)
     delete_it.delete()
-    
-    return redirect("pesticides:index")
     # messages.success(request, "Records Deleted Successfully")
+    return redirect("pesticides:index")
+
+def add_record(request):
+    formula_list = Formula.objects.all()
+    applicators = Applicator.objects.all()
+    parks = Park.objects.all()
+
+    template = loader.get_template("pesticides/add_record.html")
+    context = {"formula_list": formula_list,
+              "applicators": applicators,
+                "parks": parks,
+               }
+    if request.method == "POST":
+            messages.success(request, "Record Added...")
+            return redirect('index')
+    else:
+        return HttpResponse(template.render(context, request))
