@@ -26,6 +26,7 @@ def add_record(request):
     applicators = Applicator.objects.all()
     parks = Park.objects.all()
 
+
     template = loader.get_template("pesticides/add_record.html")
     context = {"formula_list": formula_list,
               "applicators": applicators,
