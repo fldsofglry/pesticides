@@ -1,0 +1,66 @@
+{% extends 'pesticides/base.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+
+    <h1>Update Record</h1>
+    <br/>
+
+    <form method="POST" action="{% url 'pesticides:update_record' current_record.id %}">
+        {% csrf_token %}        
+        {% if messages %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="formula">Applicator: </label>
+                    <select name="applicator" id="applicator">
+                    {% for applicator in applicators %}
+                    <option id="applicator{{ forloop.count }}" value="{{ applicator.id }}">{{ applicator }}</option>
+                    {% endfor %}
+                    </select>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="park">Park: </label>
+                    <select name="park" id="park">
+                    {% for park in parks %}
+                    <option id="park{{ forloop.count }}" value="{{ park.id }}">{{ park }}</option>
+                    {% endfor %}
+                    </select>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="formula">Formula:</label>
+                    <select name="formula" id="formula">
+                    {% for formula in formula_list %}
+                        {% if formula.id == current_record.formula.id %}
+                            <option id="formula{{ forloop.count }}" selected value="{{ formula.id}}">{{ formula.name }}</option>
+                        {% else %}
+                            <option id="formula{{ forloop.count }}" value="{{ formula.id}}">{{ formula.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="area_size">Area size:</label>
+                    <input type="text" name="area_size" value="{{ current_record.area_size }}" class="" maxlength="100" required id="area_size"/>
+        </div>
+        <div class="row mb-3">
+            <label for="date">Date:</label>
+            <input type="text" name="date" value="{{ current_record.date|date:'Y-m-d'}}" class="" maxlength="100" id="date" />
+        </div>
+        <div class="row mb-3">
+            <label for="time">Time:</label>
+            <input type="text" name="time" value="{{ current_record.date|time:'H:i'}}" class="" maxlength="100" id="time">
+        </div>
+        <div class="row mb-3">
+            <label for="targeted_species">Targeted Species:</label>
+            <input type="text" name="targeted_species" value="{{ current_record.targeted_species }}" class="" maxlength="100" required id="targeted_species">
+        </div>
+        <div class="row mb-3">
+            <label for="weather">Weather:</label>
+            <input type="text" name="weather" value="{{ current_record.weather }}" class="" maxlength="100" required id="weather">
+        </div>
+
+    <button type="submit" class="btn btn-secondary">
+    Update Record
+    </button>
+
+    </form>
+</div>
+{% endblock %}

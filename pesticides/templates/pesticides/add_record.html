@@ -1,0 +1,62 @@
+{% extends 'pesticides/base.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+
+    <h1>Add Records</h1>
+    <br/>
+
+    <form method="POST" action="{% url 'pesticides:add_record' %}">
+        {% csrf_token %}        
+        {% if messages %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="formula">Applicator: </label>
+                    <select name="applicator" id="applicator">
+                    {% for applicator in applicators %}
+                    <option id="applicator{{ forloop.count }}" value="{{ applicator.id }}">{{ applicator }}</option>
+                    {% endfor %}
+                    </select>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="park">Park: </label>
+                    <select name="park" id="park">
+                    {% for park in parks %}
+                    <option id="park{{ forloop.count }}" value="{{ park.id }}">{{ park }}</option>
+                    {% endfor %}
+                    </select>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="formula">Formula:</label>
+                    <select name="formula" id="formula">
+                    {% for formula in formula_list %}
+                    <option id="formula{{ forloop.count }}" value="{{ formula.id}}">{{ formula.name }}</option>
+                    {% endfor %}
+                    </select>
+        <div class="row mb-3">
+            <label class="col-sm-2 col-form-label" for="area_size">Area size:</label>
+                    <input type="text" name="area_size" value="" class="" maxlength="100" required id="area_size">
+        </div>
+        <div class="row mb-3">
+            <label for="date">Date:</label>
+            <input type="text" name="date" value="" class="" maxlength="100" id="date">
+        </div>
+        <div class="row mb-3">
+            <label for="time">Time:</label>
+            <input type="text" name="time" value="" class="" maxlength="100" id="time">
+        </div>
+        <div class="row mb-3">
+            <label for="targeted_species">Targeted Species:</label>
+            <input type="text" name="targeted_species" value="" class="" maxlength="100" required id="targeted_species">
+        </div>
+        <div class="row mb-3">
+            <label for="weather">Weather:</label>
+            <input type="text" name="weather" value="" class="" maxlength="100" required id="weather">
+        </div>
+
+    <button type="submit" class="btn btn-secondary">
+    Add Record
+    </button>
+
+    </form>
+</div>
+{% endblock %}
