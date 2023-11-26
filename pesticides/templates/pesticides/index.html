@@ -1,22 +1,6 @@
 {% extends 'pesticides/base.html' %}
 {% block content %}
     {% if latest_records_list %}
-        <ul>
-            {% for record in latest_records_list %}
-                <li>
-                    <a href="{% url 'pesticides:detail' record.id %}">
-                        {{ record.formula }}
-                        {{ record.applicator }}
-                        {{ record.park }}
-                        {{ record.date }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No pesticide records available.</p>
-    {% endif %}
-    {% if latest_records_list %}
     <table class="table table-hover">
         <thead class="table-dark">
             <tr>
@@ -49,6 +33,8 @@
             {% endfor %}
         </tbody>
       </table>
+      {% else %}
+        <h1>No records found.</h1>
       {% endif %}
 {% endblock %}
 
