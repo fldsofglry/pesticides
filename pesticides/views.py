@@ -1,20 +1,21 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.contrib import messages
 from django.utils.dateparse import parse_datetime
+from django.views import generic
 from .models import Record, Formula, Applicator, Park 
 
-def index(request):
-    latest_records_list = Record.objects.order_by("date")[:5]
-    template = loader.get_template("pesticides/index.html")
-    context = {"latest_records_list": latest_records_list}
-    return HttpResponse(template.render(context, request))
+class IndexView(generic.ListView):
+    template_name = "pesticides/index.html"
+    context_object_name = "latest_records_list"
 
-def detail(request, record_id):
-    pesticide_record = Record.objects.get(id=record_id)
-    context = {'record': pesticide_record}
-    return render(request, 'pesticides/detail.html', context)
+    def get_queryset(self):
+        return Record.objects.order_by("date")[:5]
+
+class DetailView(generic.DetailView):
+    model = Record
+    template_name = "pesticides/detail.html"
 
 def delete_record(request, record_id):
     delete_it = Record.objects.get(id=record_id)
