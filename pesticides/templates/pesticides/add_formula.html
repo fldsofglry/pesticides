@@ -1,0 +1,19 @@
+{% extends 'pesticides/base.html' %}
+{% block content %}
+
+<div class="col-md-6 offset-md-3">
+
+    <h1>Add Formula</h1>
+    <br/>
+
+    <form method="POST" action="{% url 'pesticides:add_formula' %}">
+        {% csrf_token %}        
+        {% if messages %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-secondary">
+        Add Formula
+        </button>
+
+    </form>
+</div>
+{% endblock %}

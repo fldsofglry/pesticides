@@ -4,8 +4,7 @@ from django.template import loader
 from django.contrib import messages
 from django.utils.dateparse import parse_datetime
 from django.views import generic
-from .forms import AddFormulaForm
-from .models import Record, Formula, Adjuvant, Applicator, Park, Pesticide 
+from .models import Record, Formula, Applicator, Park 
 
 class IndexView(generic.ListView):
     template_name = "pesticides/index.html"
@@ -17,16 +16,6 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Record
     template_name = "pesticides/detail.html"
-
-class FormulaView(generic.ListView):
-    template_name = "pesticides/formula.html"
-    context_object_name = "formulas"
-    def get_queryset(self):
-        return Formula.objects.all()
-
-class FormulaDetailView(generic.DetailView):
-    model = Formula
-    template_name = "pesticides/formula_detail.html"
 
 def delete_record(request, record_id):
     delete_it = Record.objects.get(id=record_id)
@@ -103,14 +92,17 @@ def add_formula(request):
     form = AddFormulaForm(request.POST or None)
     if request.method == "POST":
         pesticide = Pesticide.objects.get(pk=request.POST['pesticide'])
+        print(pesticide.id)
         adjuvant = Adjuvant.objects.get(pk=request.POST['adjuvant'])
         new_formula = Formula()
-        new_formula.name = request.POST['name']
-        new_formula.pesticide_amount = request.POST['pesticide_amount']
-        new_formula.adjuvant_amount = request.POST['adjuvant_amount']
-        new_formula.pesticide = pesticide
-        new_formula.adjuvant = adjuvant
-        new_formula.save()
+        form.pesticide = pesticide
+        
+        # new_formula.name = request.POST['name']
+        # new_formula.pesticide_amount = request.POST['pesticide_amount']
+        # new_formula.adjuvant_amount = request.POST['adjuvant_amount']
+        # new_formula.pesticide = pesticide
+        # new_formula.adjuvant = adjuvant
+        form.save()
         messages.success(request, "Formula added")
         return redirect('pesticides:formula')
     return render(request, 'pesticides/add_formula.html', {'form':form})    
