@@ -103,14 +103,17 @@ def add_formula(request):
     form = AddFormulaForm(request.POST or None)
     if request.method == "POST":
         pesticide = Pesticide.objects.get(pk=request.POST['pesticide'])
+        print(pesticide.id)
         adjuvant = Adjuvant.objects.get(pk=request.POST['adjuvant'])
         new_formula = Formula()
-        new_formula.name = request.POST['name']
-        new_formula.pesticide_amount = request.POST['pesticide_amount']
-        new_formula.adjuvant_amount = request.POST['adjuvant_amount']
-        new_formula.pesticide = pesticide
-        new_formula.adjuvant = adjuvant
-        new_formula.save()
+        form.pesticide = pesticide
+        
+        # new_formula.name = request.POST['name']
+        # new_formula.pesticide_amount = request.POST['pesticide_amount']
+        # new_formula.adjuvant_amount = request.POST['adjuvant_amount']
+        # new_formula.pesticide = pesticide
+        # new_formula.adjuvant = adjuvant
+        form.save()
         messages.success(request, "Formula added")
         return redirect('pesticides:formula')
     return render(request, 'pesticides/add_formula.html', {'form':form})    
